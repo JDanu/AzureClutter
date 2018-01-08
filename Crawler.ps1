@@ -14,10 +14,20 @@ Param
     [string]$ResourceName
 )
 
+Start-Transcript
+
+Import-Module Azure
+
 #Import the Azure Module
 Import-Module AzureRM.profile
 
-# Ask for Azure Login.
+#Importing Azure Module.
+#Write-Verbose "Loading Azure Powershell module."
+#Import-Module Azure
+#Write-Verbose "Azure Powershell module loaded successfully."
+
+
+# Ask for Azure Login.a
 #Login-AzureRmAccount
 
 Write-Verbose "Login Successfull"
@@ -37,9 +47,11 @@ else {
     $SelectedSubscription = $ActiveSubscriptions
 }
 
-#Set the context to the selected resource group.
+#Set the context to the selected subscription.
 Write-Verbose "Setting the RM Context to the selected subscription"
 Set-AzureRmContext -SubscriptionName $SelectedSubscription.Name
+#Get-AzureSubscription
+#Select-AzureSubscription -SubscriptionName $SelectedSubscription.Name
 
 IF([string]::IsNullOrWhiteSpace($ResourceGroupName)) {
     #Get all the Resource groups in the subscription. 
@@ -63,5 +75,8 @@ else {
     Write-Verbose "Getting the Resource Group from input parameters"
     $selectedResource = Find-AzureRmResource -ResourceGroupNameEquals $selectedRG.ResourceGroupName -ResourceNameEquals $ResourceName
 }
-#print the selected resource.
+
+#Print the selected resource.
 $selectedResource
+
+.\ActionRouter.ps1 -ResourceGroupName $SelectedRG.ResourceGroupName -SelectedResource $selectedResource
