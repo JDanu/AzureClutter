@@ -76,7 +76,15 @@ else {
     $selectedResource = Find-AzureRmResource -ResourceGroupNameEquals $selectedRG.ResourceGroupName -ResourceNameEquals $ResourceName
 }
 
+if($selectedResource -eq $null){
+    Write-Host "No Resources selected"
+}
+else{
 #Print the selected resource.
 $selectedResource
 
+Write-Verbose "Invoking action router to perform action on selected resource."
+#Call the action route to perform actions on the selected resource.
 .\ActionRouter.ps1 -ResourceGroupName $SelectedRG.ResourceGroupName -SelectedResource $selectedResource
+
+}
