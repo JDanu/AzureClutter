@@ -11,26 +11,11 @@ Param
     [string]$ResourceGroupName,
 
     [Parameter(Mandatory=$false, ValueFromPipeline=$false)]
-    [string]$ResourceName
+    [string]$ResourceName,
+
+    [Parameter(Mandatory=$false, ValueFromPipeline=$false)]
+    [string]$ResourceAction
 )
-
-Start-Transcript
-
-Import-Module Azure
-
-#Import the Azure Module
-Import-Module AzureRM.profile
-
-#Importing Azure Module.
-#Write-Verbose "Loading Azure Powershell module."
-#Import-Module Azure
-#Write-Verbose "Azure Powershell module loaded successfully."
-
-
-# Ask for Azure Login.a
-#Login-AzureRmAccount
-
-Write-Verbose "Login Successfull"
 
 #Get all the active subscriptions for the login.
 IF([string]::IsNullOrWhiteSpace($SubscriptionId)) {

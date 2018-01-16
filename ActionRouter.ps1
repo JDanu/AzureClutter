@@ -26,4 +26,12 @@ switch ($SelectedResource.ResourceType)
         Write-Host "Resource Type: Availability Set"
         .\Resource\VM-AvailabilitySet.ps1 -ResourceGroupName $ResourceGroupName -ResourceName $SelectedResource.ResourceName
     }
+    "Microsoft.Compute/disks" {
+        Write-Host "Resource Type: Managed Disks"
+        .\Resource\ManagedDisks.ps1 -ResourceGroupName $ResourceGroupName -ResourceName $SelectedResource.ResourceName
+    }
+    "Microsoft.Network/loadBalancers" {
+        Write-Host "Resource Type: Load Balancer"
+        .\Resource\Loadbalancer.ps1 -ResourceGroupName $ResourceGroupName -ResourceName $SelectedResource.ResourceName
+    }
 }
