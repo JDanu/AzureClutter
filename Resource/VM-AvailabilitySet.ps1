@@ -16,6 +16,7 @@ $SelectedAvailabilitySet
 $VMRefs = New-Object System.Collections.Generic.List[PSCustomObject]
 
 $AS = Get-AzureRmAvailabilitySet -ResourceGroupName $ResourceGroupName -Name $ResourceName
+# TODO: Filter out by Selected availability set.
 $AS.VirtualMachinesReferences | ForEach { 
     $VMResource =(Get-AzureRmResource -Id $_.id); 
     $VM= Get-AzureRMVM -Name $VMResource.Name -ResourceGroup $VMResource.ResourceGroupName -Status; 

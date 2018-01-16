@@ -8,21 +8,23 @@ Param
     [string]$ResourceName,
 
     [Parameter(Mandatory=$false, ValueFromPipeline=$false)]
-    [int]$ResourceAction = -1,
+    [int]$VMName
 
-    [Parameter(mandatory=$false, ValueFromPipeline=$false)]
-    [bool]$LogCommand = $true
 )
 
-Write-Verbose "Getting the details of the standalone VM " 
-$AzureVM = Get-AzureRMVM -ResourceGroupName $ResourceGroupName -Name $ResourceName
+Write-Verbose "Getting the details of the Managed Disk " 
+$AzureMD = Get-AzureRmDisk -ResourceGroupName $ResourceGroupName -DiskName $ResourceName
+$AzureMD
 
+<#
 $AzureVMFailOptions1 = New-Object system.object 
 $AzureVMFailOptions1 | Add-Member NoteProperty -name ID -Value 1
-$AzureVMFailOptions1 | Add-Member NoteProperty -name Name -Value "Restart VM"
+$AzureVMFailOptions1 | Add-Member NoteProperty -name Name -Value "Remove this Managed Disk from VM"
 $AzureVMFailOptions2 = New-Object system.object 
 $AzureVMFailOptions2 | Add-Member NoteProperty -name ID -Value 2
-$AzureVMFailOptions2 | Add-Member NoteProperty -name Name -Value "Stop VM"
+$AzureVMFailOptions2 | Add-Member NoteProperty -name Name -Value "Add this Managed Disk to the VM"
+
+
 
 $AzureFailOptionsArray += $AzureVMFailOptions1, $AzureVMFailOptions2
 
@@ -41,15 +43,10 @@ else{
 $AzureVMFailOption
 Write-Verbose $AzureVMFailOption.Name
 
-if($LogCommand){
-    $command = .\Resource\ActionCommand.ps1 -ResourceGroupName $ResourceName -ResourceName $ResourceName -ResourceAction $AzureVMFailOption.ID 
-    .\Resource\LogTermination.ps1 -ResourceGroupName $ResourceGroupName -ResourceName $ResourceName -Command $command
-}
-
 switch ($AzureVMFailOption.ID)
 {
     1 {
-        Write-Verbose "Restarting VM."        
+        Write-Verbose "Restarting VM."
         Restart-AzureRmVM -ResourceGroupName $ResourceGroupName -Name $ResourceName
     }
     2 {
@@ -61,16 +58,4 @@ switch ($AzureVMFailOption.ID)
         Start-AzureRmVM -ResourceGroupName $ResourceGroupName -Name $ResourceName
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
+#>
